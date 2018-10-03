@@ -24,7 +24,6 @@ class Widget_Shortcode {
 	private function __construct() {
 		add_shortcode( 'widget', array( $this, 'shortcode' ) );
 		add_action( 'plugins_loaded', array( $this, 'i18n' ), 5 );
-		add_action( 'widgets_init', array( $this, 'arbitrary_sidebar' ), 20 );
 		add_action( 'in_widget_form', array( $this, 'in_widget_form' ), 10, 3 );
 		add_filter( 'mce_external_plugins', array( $this, 'mce_external_plugins' ) );
 		add_filter( 'mce_buttons', array( $this, 'mce_buttons' ) );
@@ -47,26 +46,6 @@ class Widget_Shortcode {
 	}
 
 	/**
-	 * Registers arbitrary widget area
-	 *
-	 * Although you can use the widget shortcode for any widget in any widget area,
-	 * you can use this arbitrary widget area for your widgets, since they don't show up
-	 * in the front-end.
-	 *
-	 * @since 0.1
-	 * @return void
-	 */
-	function arbitrary_sidebar() {
-		register_sidebar( array(
-			'name' => __( 'Widget Shortcode', 'Millionaires-Digest-Widget-Shortcode' ),
-			'description'	=> __( 'This widget area is not displayed on frontend and can be used for [widget] shortcode.', 'Millionaires-Digest-Widget-Shortcode' ),
-			'id' => 'arbitrary',
-			'before_widget' => '',
-			'after_widget'	=> '',
-		) );
-	}
-
-	/**
 	 * Shows the shortcode for the widget
 	 *
 	 * @since 0.1
@@ -74,7 +53,7 @@ class Widget_Shortcode {
 	 */
 	function in_widget_form( $widget, $return, $instance ) {
 		echo '<p>' .
-				__( 'Shortcode', 'Millionaires-Digest-Widget-Shortcode' ) . ': ' . ( ( $widget->number == '__i__' ) ? __( 'Please save this first.', 'Millionaires-Digest-Widget-Shortcode' ) : '<input type="text" value="' . esc_attr( '[widget id="'. $widget->id .'"]' ) . '" readonly="readonly" class="widefat" onclick="this.select()" />' ) .
+				__( 'Shortcode', 'Millionaires-Digest-Widget-Shortcodes' ) . ': ' . ( ( $widget->number == '__i__' ) ? __( 'Please save this first.', 'Millionaires-Digest-Widget-Shortcodes' ) : '<input type="text" value="' . esc_attr( '[widget id="'. $widget->id .'"]' ) . '" readonly="readonly" class="widefat" onclick="this.select()" />' ) .
 			'</p>';
 	}
 
@@ -84,7 +63,7 @@ class Widget_Shortcode {
 	 * @since 0.2.4
 	 */
 	function i18n() {
-		load_plugin_textdomain( 'Millionaires-Digest-Widget-Shortcode', false, '/languages' );
+		load_plugin_textdomain( 'Millionaires-Digest-Widget-Shortcodes', false, '/languages' );
 	}
 
 	/**
@@ -270,7 +249,7 @@ class Widget_Shortcode {
 			}
 		}
 		wp_localize_script( 'editor', 'widgetShortcode', array(
-			'title' => __( 'Widget Shortcode', 'Millionaires-Digest-Widget-Shortcode' ),
+			'title' => __( 'Widget Shortcode', 'Millionaires-Digest-Widget-Shortcodes' ),
 			'widgets' => $widgets,
 			'image' => plugins_url( 'assets/widget-icon.png', __FILE__ ),
 		) );
